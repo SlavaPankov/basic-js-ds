@@ -99,8 +99,47 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    if (this.rootNode === null) {
+
+    this.rootNode = this.removeNode(this.rootNode, data);
+  }
+
+  removeNode(node, data) {
+    if (node === null) {
       return null;
+    }
+
+    if (data < node.data) {
+      node.left = this.removeNode(node.left, data);
+      return node;
+    } else if (data > node.data) {
+      node.right = this.removeNode(node.right, data);
+      return node;
+    } else {
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+
+      if (node.left === null) {
+        node = node.right;
+        return node
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      let newNode = this.minNode(node.right);
+      node.data = newNode.data;
+      node.right = this.removeNode(node.right, newNode.data);
+      return node;
+    }
+  }
+
+  minNode(node) {
+    if (node.left === null) {
+      return node;
+    } else {
+      return this.minNode(node.left);
     }
   }
 
@@ -114,29 +153,23 @@ class BinarySearchTree {
       current = current.left;
     }
 
-    return current;
+    return current.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.rootNode === null) {
+      return null;
+    }
+    let current = this.rootNode;
+
+    while (current.right !== null) {
+      current = current.right;
+    }
+
+    return current.data;
   }
 }
 
-const BST = new BinarySearchTree();
-
-BST.add(9);
-BST.add(14);
-BST.add(54);
-BST.add(2);
-BST.add(6);
-BST.add(8);
-BST.add(31);
-BST.add(1);
-
-console.log(BST.find(31).data);
-console.log(BST.has(3));
-console.log(BST.min());
 
 module.exports = {
   BinarySearchTree
