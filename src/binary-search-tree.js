@@ -70,7 +70,7 @@ class BinarySearchTree {
     }
 
     if(!found) {
-      return null;
+      return false;
     }
 
     return found;
@@ -92,20 +92,29 @@ class BinarySearchTree {
     }
 
     if(!found) {
-      return false;
+      return null;
     }
 
     return found;
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    if (this.rootNode === null) {
+      return null;
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.rootNode === null) {
+      return null;
+    }
+    let current = this.rootNode;
+
+    while (current.left !== null) {
+      current = current.left;
+    }
+
+    return current;
   }
 
   max() {
@@ -116,12 +125,18 @@ class BinarySearchTree {
 
 const BST = new BinarySearchTree();
 
+BST.add(9);
+BST.add(14);
+BST.add(54);
 BST.add(2);
-BST.add(3);
-BST.add(4);
+BST.add(6);
+BST.add(8);
+BST.add(31);
+BST.add(1);
 
-console.log(BST.find(4).data);
-console.log(BST.has(6));
+console.log(BST.find(31).data);
+console.log(BST.has(3));
+console.log(BST.min());
 
 module.exports = {
   BinarySearchTree
